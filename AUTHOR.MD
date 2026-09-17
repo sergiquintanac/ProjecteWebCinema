@@ -1,4 +1,4 @@
 Educem
 DAM 2
-Yann Lao
-Sergi Quintana
+Yann Lao Moncusí
+Sergi Quintana Carreras
