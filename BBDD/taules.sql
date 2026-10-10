@@ -13,21 +13,21 @@ CREATE TABLE IF NOT EXISTS genere (
 CREATE TABLE IF NOT EXISTS pelicula (
   imdb_id        VARCHAR(15)  PRIMARY KEY,
   nom            VARCHAR(150) NOT NULL,
-  duracio        INT          NOT NULL,      -- minuts
+  duracio        INT          NOT NULL,      
   sinopsi        TEXT,
-  classificacio  VARCHAR(10),                -- edat recomanada
+  classificacio  VARCHAR(10),                
   url_trailer    VARCHAR(255),
-  valoracio      DECIMAL(3,1),               -- 0-10
+  valoracio      DECIMAL(3,1),               
   any_estrena    INT
 );
-CREATE TABLE IF NOT EXISTS pelicula_genere (          -- Té (Pel·lícula N:M Gènere)
+CREATE TABLE IF NOT EXISTS pelicula_genere (         
   imdb_id        VARCHAR(15) REFERENCES pelicula(imdb_id),
   genere_nom     VARCHAR(50) REFERENCES genere(nom),
   PRIMARY KEY (imdb_id, genere_nom)
 );
 CREATE TABLE IF NOT EXISTS rol     (nom VARCHAR(50)  PRIMARY KEY);
 CREATE TABLE IF NOT EXISTS persona (nom VARCHAR(100) PRIMARY KEY);
-CREATE TABLE IF NOT EXISTS participa (                -- Ternària Pel·lícula - Rol - Persona
+CREATE TABLE IF NOT EXISTS participa (                
   imdb_id        VARCHAR(15)  REFERENCES pelicula(imdb_id),
   rol_nom        VARCHAR(50)  REFERENCES rol(nom),
   persona_nom    VARCHAR(100) REFERENCES persona(nom),
@@ -45,13 +45,13 @@ CREATE TABLE IF NOT EXISTS tipus_cadira (nom VARCHAR(50) PRIMARY KEY);
 CREATE TABLE IF NOT EXISTS tipus_cadira_sala (
   id                 INT PRIMARY KEY,
   tipus_cadira_nom   VARCHAR(50) NOT NULL REFERENCES tipus_cadira(nom),
-  preu               DECIMAL(6,2) NOT NULL    -- preu base
+  preu               DECIMAL(6,2) NOT NULL    
 );
-CREATE TABLE IF NOT EXISTS sala_tipus_cadira (        -- Té (Sala N:M TipusCadiraSala) amb historial de preus
+CREATE TABLE IF NOT EXISTS sala_tipus_cadira (       
   sala_id               INT NOT NULL REFERENCES sala(id),
   tipus_cadira_sala_id  INT NOT NULL REFERENCES tipus_cadira_sala(id),
   data_inici            DATE NOT NULL,
-  data_final            DATE,                       -- NULL = vigent
+  data_final            DATE,                      
   preu                  DECIMAL(6,2) NOT NULL,
   PRIMARY KEY (sala_id, tipus_cadira_sala_id, data_inici)
 );
@@ -93,19 +93,19 @@ CREATE TABLE IF NOT EXISTS reserva_cadira (
   reserva_id    INT NOT NULL REFERENCES reserva(id),
   projeccio_id  INT NOT NULL REFERENCES projeccio(id),
   cadira_id     INT NOT NULL REFERENCES cadira(id),
-  UNIQUE (projeccio_id, cadira_id)                  -- una cadira no es pot reservar dues vegades per sessió
+  UNIQUE (projeccio_id, cadira_id)                 
 );
-CREATE TABLE IF NOT EXISTS valoracio_pelicula (        -- Valora (Usuari N:M Pel·lícula)
+CREATE TABLE IF NOT EXISTS valoracio_pelicula (       
   usuari_id  INT NOT NULL REFERENCES usuari(id),
   imdb_id    VARCHAR(15) NOT NULL REFERENCES pelicula(imdb_id),
   data       DATE NOT NULL,
-  nota       INT NOT NULL,                           -- 1-10
+  nota       INT NOT NULL,                         
   PRIMARY KEY (usuari_id, imdb_id, data)
 );
-CREATE TABLE IF NOT EXISTS valoracio_cinema (          -- Valora (Usuari N:M Cinema)
+CREATE TABLE IF NOT EXISTS valoracio_cinema (         
   usuari_id   INT NOT NULL REFERENCES usuari(id),
   cinema_nom  VARCHAR(100) NOT NULL REFERENCES cinema(nom),
   data        DATE NOT NULL,
-  nota        INT NOT NULL,                          -- 1-5
+  nota        INT NOT NULL,                          
   PRIMARY KEY (usuari_id, cinema_nom, data)
 );

@@ -6958,5 +6958,4 @@ INSERT INTO valoracio_cinema (usuari_id, cinema_nom, data, nota) VALUES
   (14, 'CineReserva Manresa', '2026-10-08', 5),
   (21, 'CineReserva Vic', '2026-10-08', 5),
   (22, 'CineReserva Barcelona Gràcia', '2026-10-08', 4);
-
-
+COMMIT;
