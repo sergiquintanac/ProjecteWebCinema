@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS `CineReserva`;
-
+USE CineReserva;
 -- Entitats --
 /* [Usuari]: 
 {id (PK), nom, email, esAdmin, hashPassword, dataActivacio (N), token (N), expiracioToken (N)}*/
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS ValoracioPelicula (
 	active_key BOOL
 		GENERATED ALWAYS AS (IF(deleted_at IS NULL, TRUE, NULL)) VIRTUAL,
     
-    UNIQUE KEY uq_vp_pelicula_active (idGenere, idPelicula, active_key),
+    UNIQUE KEY uq_vp_pelicula_active (idUsuari, idPelicula, active_key),
     
     CONSTRAINT fk_vp_usuari FOREIGN KEY (idUsuari) REFERENCES Usuari(id),
     CONSTRAINT fk_vp_pelicula FOREIGN KEY (idPelicula) REFERENCES Pelicula(id)
@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS ValoracioCinema (
 	active_key BOOL
 		GENERATED ALWAYS AS (IF(deleted_at IS NULL, TRUE, NULL)) VIRTUAL,
     
-    UNIQUE KEY uq_vc_cinema_active (idGenere, idCinema, active_key),
+    UNIQUE KEY uq_vc_cinema_active (idUsuari, idCinema, active_key),
     
     CONSTRAINT fk_vc_usuari FOREIGN KEY (idUsuari) REFERENCES Usuari(id),
     CONSTRAINT fk_vc_cinema FOREIGN KEY (idCinema) REFERENCES Cinema(id)
